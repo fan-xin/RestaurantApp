@@ -30,11 +30,12 @@ public class SplashActivity extends AppCompatActivity {
         //添加监听事件
         initEvent();
 
-        mHandler.postDelayed(mRunnableToLogin,3000);
+        mHandler.postDelayed(mRunnableToLogin,8000);
 
     }
 
     private void initEvent(){
+        //给跳过按钮添加响应事件
         mBtnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
