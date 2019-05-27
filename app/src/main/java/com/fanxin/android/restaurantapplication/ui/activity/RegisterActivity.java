@@ -1,12 +1,10 @@
-package com.fanxin.android.restaurantapplication;
+package com.fanxin.android.restaurantapplication.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.textclassifier.TextLinks;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toolbar;
+
+import com.fanxin.android.restaurantapplication.R;
 
 public class RegisterActivity extends BaseActivity {
 

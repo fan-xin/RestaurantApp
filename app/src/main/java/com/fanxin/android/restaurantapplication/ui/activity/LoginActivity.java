@@ -1,12 +1,13 @@
-package com.fanxin.android.restaurantapplication;
+package com.fanxin.android.restaurantapplication.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.fanxin.android.restaurantapplication.R;
 
 public class LoginActivity extends BaseActivity {
     //对控件进行声明

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
-    tools:context=".LoginActivity">
+    tools:context=".ui.activity.LoginActivity">
     <TextView
         android:id="@+id/id_tv_title"
         android:text="悠然餐厅"
