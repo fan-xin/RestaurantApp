@@ -6,5 +6,5 @@ package com.fanxin.android.restaurantapplication.config;
  */
 public class Config {
 //    public static String baseUrl = "http://115.29.246.231/basePro/";
-    public static String baseUrl = "https://restaurant.t.imooc.com/basePro/";
+    public static String baseUrl = "http://restaurant.t.imooc.com/basePro/";
 }

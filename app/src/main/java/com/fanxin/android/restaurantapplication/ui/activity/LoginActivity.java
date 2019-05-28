@@ -1,6 +1,7 @@
 package com.fanxin.android.restaurantapplication.ui.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,13 +18,20 @@ import com.fanxin.android.restaurantapplication.biz.UserBiz;
 import com.fanxin.android.restaurantapplication.R;
 import com.fanxin.android.restaurantapplication.net.CommonCallback;
 import com.fanxin.android.restaurantapplication.utils.T;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.cookie.CookieJarImpl;
 
 import org.w3c.dom.Text;
+
+import okhttp3.CookieJar;
 
 public class LoginActivity extends BaseActivity {
 
     //业务类对象
     private UserBiz mUserBiz = new UserBiz();
+
+    private static final String KEY_USERNAME = "key_username";
+    private static final String KEY_PASSWORD = "key_password";
 
     //对控件进行声明
     private EditText mEtUsername;
@@ -39,6 +47,8 @@ public class LoginActivity extends BaseActivity {
         initView();
 
         initEvent();
+
+        initIntent(getIntent());
 
     }
 
@@ -118,6 +128,54 @@ public class LoginActivity extends BaseActivity {
         mEtPassword = findViewById(R.id.id_et_password);
         mBtnLogin = findViewById(R.id.id_btn_login);
         mTvRegister = findViewById(R.id.id_tv_register);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //获取Cookie并且清空
+        CookieJarImpl cookieJar = (CookieJarImpl)OkHttpUtils.getInstance().getOkHttpClient().cookieJar();
+        cookieJar.getCookieStore().removeAll();
+
+    }
+
+    public static void launch(Context context, String username, String password) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        //清空Activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //放入参数
+        intent.putExtra(KEY_USERNAME,username);
+        intent.putExtra(KEY_PASSWORD,password);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        //initIntent(intent);
+
+    }
+
+    private void initIntent(Intent intent) {
+        if (intent == null){
+            return;
+        }
+        //如果intent不为空
+        String username = intent.getStringExtra(KEY_USERNAME);
+        String password = intent.getStringExtra(KEY_PASSWORD);
+
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
+            //T.showToast("wrong");
+            return;
+
+        }
+
+        mEtUsername.setText(username);
+        mEtPassword.setText(password);
+
 
     }
 }

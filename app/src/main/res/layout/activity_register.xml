@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:background="#ffffff"
         android:layout_marginTop="4dp"
-        android:inputType="text"
+        android:inputType="textWebPassword"
         android:hint="请输入密码"
         android:paddingLeft="8dp"
         android:textColorHint="#000000"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:background="#ffffff"
         android:layout_marginTop="4dp"
-        android:inputType="text"
+        android:inputType="textWebPassword"
         android:hint="请再次输入密码"
         android:paddingLeft="8dp"
         android:textColorHint="#000000"
@@ -45,6 +45,7 @@
 
     <Button
         android:id="@+id/id_btn_register"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:text="提交"

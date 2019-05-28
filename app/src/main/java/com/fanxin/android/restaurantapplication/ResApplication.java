@@ -30,6 +30,7 @@ public class ResApplication extends Application {
         SPUtils.init(this,"sp_user.pref");
 
         //使用到Cookie
+        //持久化存储Cookie
         CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
 
 
