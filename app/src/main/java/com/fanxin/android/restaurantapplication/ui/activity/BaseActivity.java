@@ -1,5 +1,6 @@
 package com.fanxin.android.restaurantapplication.ui.activity;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,9 @@ import com.fanxin.android.restaurantapplication.R;
  * 19/05/27  15:42
  */
 public class BaseActivity extends AppCompatActivity {
+
+    private ProgressDialog mLoadingDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +28,23 @@ public class BaseActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(0xff000000);
         }
 
+        mLoadingDialog = new ProgressDialog(this);
+        mLoadingDialog.setMessage("Loading");
+
     }
+
+
+    protected void stopLoadingProgress() {
+        if (mLoadingDialog != null & mLoadingDialog.isShowing()){
+            mLoadingDialog.dismiss();
+        }
+    }
+
+    protected void startLoadingProgress() {
+        mLoadingDialog.show();
+
+    }
+
 
     protected void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
@@ -36,6 +56,13 @@ public class BaseActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        stopLoadingProgress();
+        mLoadingDialog = null;
     }
 }
