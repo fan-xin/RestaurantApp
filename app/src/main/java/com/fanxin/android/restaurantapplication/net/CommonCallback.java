@@ -1,5 +1,8 @@
 package com.fanxin.android.restaurantapplication.net;
 
+import android.util.Log;
+
+import com.fanxin.android.restaurantapplication.utils.GsonUtil;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -10,8 +13,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import okhttp3.Call;
-
-
 
 /**
  * Created by Fan Xin <fanxin.hit@gmail.com>
@@ -35,25 +36,28 @@ public abstract class CommonCallback<T> extends StringCallback {
     }
 
 
-    @Override
-    public void onError(Call call, Exception e) {
+
+    public void onError(Call call, Exception e, int id) {
         onError(e);
     }
 
-    @Override
-    public void onResponse(Call call, String s) {
+
+    public void onResponse(String response, int id) {
         //在response函数中进行区分到底是不是Error
         try {
-            JSONObject resp = new JSONObject(s);
+            JSONObject resp = new JSONObject(response);
             int resultCode = resp.getInt("resultCode");
+
+            Log.e("hello","resultCode is"+resultCode);
 
             if (resultCode == 1){
                 //成功
                 String data = resp.getString("data");
                 Gson gson = new Gson();
-                onSuccess((T)gson.fromJson(data,mType));
+                onSuccess((T) GsonUtil.getGson().fromJson(data,mType));
                 
             }else {
+                Log.e("hello","here");
                 onError(new RuntimeException(resp.getString("resultMessage")));
             }
 
@@ -66,5 +70,6 @@ public abstract class CommonCallback<T> extends StringCallback {
     }
 
     public abstract void onError(Exception e);
+
     public abstract void onSuccess(T response);
 }
