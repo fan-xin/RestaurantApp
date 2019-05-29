@@ -65,4 +65,10 @@ public class BaseActivity extends AppCompatActivity {
         stopLoadingProgress();
         mLoadingDialog = null;
     }
+
+    //跳转到登录界面
+    protected void toLoginActivity(){
+
+    }
+
 }

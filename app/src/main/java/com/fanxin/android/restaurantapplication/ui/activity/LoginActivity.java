@@ -178,4 +178,13 @@ public class LoginActivity extends BaseActivity {
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mUserBiz.onDestory();
+
+
+    }
 }

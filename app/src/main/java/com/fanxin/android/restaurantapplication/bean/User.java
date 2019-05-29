@@ -1,10 +1,12 @@
 package com.fanxin.android.restaurantapplication.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Fan Xin <fanxin.hit@gmail.com>
  * 19/05/27  16:55
  */
-public class User {
+public class User implements Serializable {
     private int id;
     private String password;
     private String username;
