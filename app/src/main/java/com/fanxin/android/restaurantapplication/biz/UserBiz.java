@@ -35,4 +35,8 @@ public class UserBiz {
                 .execute(commonCallback);
 
     }
+
+    public void onDestory(){
+        OkHttpUtils.getInstance().cancelTag(this);
+    }
 }
