@@ -1,5 +1,6 @@
 package com.fanxin.android.restaurantapplication.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,9 +78,13 @@ public class OrderActivity extends BaseActivity {
             }
         });
 
+        //点餐按钮
         mBtnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(OrderActivity.this, ProductListActivity.class);
+                startActivityForResult(intent,1001);
+
 
             }
         });
