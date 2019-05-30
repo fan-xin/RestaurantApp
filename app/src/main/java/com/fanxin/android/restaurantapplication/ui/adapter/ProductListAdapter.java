@@ -73,6 +73,7 @@ public class ProductListAdapter
 
     }
 
+    //接口
     private OnProductListener mOnProductListener;
 
     public void setOnProductListener(OnProductListener onProductListener){
@@ -132,7 +133,7 @@ public class ProductListAdapter
                     ProductItem productItem = mProductItems.get(pos);
 
                     if (productItem.count <= 0){
-                        T.showToast("已经是０了！");
+                        T.showToast("已经是0了！");
                         return;
                     }
 

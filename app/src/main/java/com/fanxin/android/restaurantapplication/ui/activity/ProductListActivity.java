@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fanxin.android.restaurantapplication.R;
+import com.fanxin.android.restaurantapplication.bean.Order;
 import com.fanxin.android.restaurantapplication.bean.Product;
+import com.fanxin.android.restaurantapplication.biz.OrderBiz;
 import com.fanxin.android.restaurantapplication.biz.ProductBiz;
 import com.fanxin.android.restaurantapplication.net.CommonCallback;
 import com.fanxin.android.restaurantapplication.ui.adapter.ProductListAdapter;
@@ -40,6 +42,10 @@ public class ProductListActivity extends BaseActivity {
 
     private ProductBiz mProductBiz = new ProductBiz();
 
+    private OrderBiz mOrderBiz = new OrderBiz();
+
+    private Order mOrder = new Order();
+
 
 
     @Override
@@ -54,11 +60,13 @@ public class ProductListActivity extends BaseActivity {
 
         initEvent();
 
+        //加载数据
         loadDatas();
 
     }
 
     private void initEvent() {
+        //向上拉，加载更多数据
         mSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
             @Override
             public void onPullUpRefresh() {
@@ -67,6 +75,7 @@ public class ProductListActivity extends BaseActivity {
             }
         });
 
+        //向下拉，加载数据
         mSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
             @Override
             public void onPullUpRefresh() {
@@ -76,14 +85,51 @@ public class ProductListActivity extends BaseActivity {
         });
 
 
+        //支付按钮点击事件
         mBtnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                T.showToast("点击付款");
+
+                //校验数据
+                if (mTotalCount <= 0){
+                    T.showToast("还没有选择餐品");
+                    return;
+                }
+
+                //给order填充数据
+                mOrder.setCount(mTotalCount);
+                mOrder.setPrice(mTotalPrice);
+                mOrder.setRestaurant(mDatas.get(0).getRestaurant());
+
+                startLoadingProgress();
+
+
+
+                mOrderBiz.add(mOrder, new CommonCallback<String>() {
+                    @Override
+                    public void onError(Exception e) {
+                        stopLoadingProgress();
+                        T.showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        stopLoadingProgress();
+                        T.showToast("订单支付成功");
+
+                        setResult(RESULT_OK);
+
+                        finish();
+
+                    }
+                });
 
             }
         });
 
 
+        //设置监听器
         mAdapter.setOnProductListener(new ProductListAdapter.OnProductListener() {
             @Override
             public void onProductAdd(ProductItem productItem) {
@@ -91,6 +137,11 @@ public class ProductListActivity extends BaseActivity {
                 mTvCount.setText("数量:"+mTotalCount);
                 mTotalPrice += productItem.getPrice();
                 mBtnPay.setText(String.format("%5.2f",mTotalPrice)+"元　立即支付");
+
+                mOrder.addProduct(productItem);
+
+
+
             }
 
             @Override
@@ -99,15 +150,21 @@ public class ProductListActivity extends BaseActivity {
                 mTvCount.setText("数量:"+mTotalCount);
                 mTotalPrice -= productItem.getPrice();
 
-                //表示金额之前，要处理金额为显示小数点后两位
+                if (mTotalCount == 0){
+                    mTotalPrice = 0;
+                }
 
+                //表示金额之前，要处理金额为显示小数点后两位
                 mBtnPay.setText(String.format("%5.2f",mTotalPrice)+"元　立即支付");
+
+                mOrder.removeProduct(productItem);
 
             }
         });
 
 
     }
+
 
     private void loadMore() {
         startLoadingProgress();
@@ -151,15 +208,20 @@ public class ProductListActivity extends BaseActivity {
             public void onError(Exception e) {
                 stopLoadingProgress();
                 T.showToast(e.getMessage());
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
 
             }
 
             @Override
             public void onSuccess(List<Product> response) {
                 stopLoadingProgress();
-                mSwipeRefreshLayout.setRefreshing(false);
-                mCurrentPage = 0;
+                if (mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+
+                //mCurrentPage = 0;
 
                 mDatas.clear();
 
