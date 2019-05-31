@@ -66,9 +66,9 @@ public class ProductListActivity extends BaseActivity {
         });
 
         //向下拉，加载数据
-        mSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onPullUpRefresh() {
+            public void onRefresh() {
                 loadDatas();
 
             }
@@ -161,7 +161,6 @@ public class ProductListActivity extends BaseActivity {
                 T.showToast(e.getMessage());
                 mCurrentPage--;
                 mSwipeRefreshLayout.setPullUpRefreshing(false);
-
             }
 
             @Override
@@ -181,7 +180,6 @@ public class ProductListActivity extends BaseActivity {
                 }
 
                 mAdapter.notifyDataSetChanged();
-
             }
         });
 
@@ -194,20 +192,16 @@ public class ProductListActivity extends BaseActivity {
             public void onError(Exception e) {
                 stopLoadingProgress();
                 T.showToast(e.getMessage());
-                if (mSwipeRefreshLayout.isRefreshing()){
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
+                mSwipeRefreshLayout.setRefreshing(false);
 
+                if ("用户未登录".equals(e.getMessage())){
+                    toLoginActivity();
+                }
             }
 
             @Override
             public void onSuccess(List<Product> response) {
                 stopLoadingProgress();
-                if (mSwipeRefreshLayout.isRefreshing()){
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-
-                //mCurrentPage = 0;
 
                 mDatas.clear();
 
@@ -216,6 +210,10 @@ public class ProductListActivity extends BaseActivity {
                 }
 
                 mAdapter.notifyDataSetChanged();
+
+                if (mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
 
                 //清空选择的数据，数量价格
                 mTotalPrice = 0;
