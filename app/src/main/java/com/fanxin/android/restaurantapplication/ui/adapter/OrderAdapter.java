@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.fanxin.android.restaurantapplication.R;
 import com.fanxin.android.restaurantapplication.bean.Order;
 import com.fanxin.android.restaurantapplication.config.Config;
+import com.fanxin.android.restaurantapplication.ui.activity.OrderDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -82,8 +83,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderItemVie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO
-
+                    OrderDetailActivity.launch(mContext,mDatas.get(getLayoutPosition()));
 
                 }
             });
