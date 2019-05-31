@@ -8,23 +8,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanxin.android.restaurantapplication.R;
+import com.fanxin.android.restaurantapplication.bean.Order;
 import com.fanxin.android.restaurantapplication.bean.Product;
 import com.fanxin.android.restaurantapplication.config.Config;
 import com.fanxin.android.restaurantapplication.utils.T;
 import com.squareup.picasso.Picasso;
 
-public class ProductDetailActivity extends BaseActivity {
-    private Product mProduct;
+import java.util.List;
+
+public class OrderDetailActivity extends BaseActivity {
+
+    private Order mOrder;
     private ImageView mIvImage;
     private TextView mTvTitle;
     private TextView mTvDesc;
     private TextView mTvPrice;
 
-    private static final String KEY_PRODUCT = "key_product";
+    private static final String KEY_ORDER = "key_order";
 
-    public static void launch(Context context, Product product){
+    public static void launch(Context context, Order order){
         Intent intent = new Intent(context,ProductDetailActivity.class);
-        intent.putExtra(KEY_PRODUCT,product);
+        intent.putExtra(KEY_ORDER,order);
         context.startActivity(intent);
     }
 
@@ -32,18 +36,19 @@ public class ProductDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail);
+        setContentView(R.layout.activity_order_detail);
 
         setupToolbar();
 
-        setTitle("商品详情");
+        setTitle("订单详情");
 
         Intent intent = getIntent();
         if (intent != null){
-            mProduct = (Product)intent.getSerializableExtra(KEY_PRODUCT);
+            mOrder = (Order) intent.getSerializableExtra(KEY_ORDER);
         }
-        if (mProduct == null){
+        if (mOrder == null){
             T.showToast("出错了");
+            finish();
             return;
         }
 
@@ -55,12 +60,27 @@ public class ProductDetailActivity extends BaseActivity {
 
     private void initEvent() {
         Picasso.get()
-                .load(Config.baseUrl+mProduct.getIcon())
+                .load(Config.baseUrl+mOrder.getRestaurant().getIcon())
                 .placeholder(R.drawable.pictures_no)
                 .into(mIvImage);
-        mTvTitle.setText(mProduct.getName());
-        mTvDesc.setText(mProduct.getDescription());
-        mTvPrice.setText(mProduct.getPrice()+"");
+        mTvTitle.setText(mOrder.getRestaurant().getName());
+
+        mTvPrice.setText("共消费: "+mOrder.getPrice()+"元");
+
+        //拼接订单详情
+        List<Order.ProductVo> ps = mOrder.getPs();
+        StringBuilder sb = new StringBuilder();
+        for (Order.ProductVo productVo : ps){
+            sb.append(productVo.product.getName())
+                    .append("*")
+                    .append(productVo.count)
+                    .append("\n");
+        }
+        mTvDesc.setText(sb.toString());
+
+
+
+
     }
 
     private void initView() {
@@ -69,4 +89,6 @@ public class ProductDetailActivity extends BaseActivity {
         mTvDesc = (TextView)findViewById(R.id.id_tv_desc);
         mTvPrice = (TextView)findViewById(R.id.id_tv_price);
     }
+
+
 }
