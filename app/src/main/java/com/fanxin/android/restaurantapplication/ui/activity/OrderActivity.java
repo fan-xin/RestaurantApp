@@ -121,15 +121,17 @@ public class OrderActivity extends BaseActivity {
             public void onSuccess(List<Order> response) {
                 stopLoadingProgress();
 
+
                 if (response.size()== 0){
                     T.showToast("没有订单了");
                     //停止刷新
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    mSwipeRefreshLayout.setPullUpRefreshing(false);
                     return;
                 }
 
                 T.showToast("订单加载成功！");
                 mDatas.addAll(response);
+
                 mSwipeRefreshLayout.setPullUpRefreshing(false);
 
             }
@@ -183,7 +185,7 @@ public class OrderActivity extends BaseActivity {
         User user = UserInfoHolder.getInstance().getUser();
         if(user!= null){
             //设置用户名
-            mTvUsername.setText(user.getUsername());
+            mTvUsername.setText("欢迎您！　"+user.getUsername());
         } else {
             //如果用户登录状态丢失
             toLoginActivity();
@@ -205,7 +207,7 @@ public class OrderActivity extends BaseActivity {
 
 
         Picasso.get()
-                .load(R.drawable.icon)
+                .load(R.drawable.icon_guest)
                 .placeholder(R.drawable.pictures_no)
                 .transform(new CircleTransform())
                 .into(mIvIcon);
