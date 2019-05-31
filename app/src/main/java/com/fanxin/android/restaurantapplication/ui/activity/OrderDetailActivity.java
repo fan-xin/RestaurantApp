@@ -2,14 +2,12 @@ package com.fanxin.android.restaurantapplication.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fanxin.android.restaurantapplication.R;
 import com.fanxin.android.restaurantapplication.bean.Order;
-import com.fanxin.android.restaurantapplication.bean.Product;
 import com.fanxin.android.restaurantapplication.config.Config;
 import com.fanxin.android.restaurantapplication.utils.T;
 import com.squareup.picasso.Picasso;
@@ -27,7 +25,7 @@ public class OrderDetailActivity extends BaseActivity {
     private static final String KEY_ORDER = "key_order";
 
     public static void launch(Context context, Order order){
-        Intent intent = new Intent(context,ProductDetailActivity.class);
+        Intent intent = new Intent(context,OrderDetailActivity.class);
         intent.putExtra(KEY_ORDER,order);
         context.startActivity(intent);
     }
@@ -51,7 +49,6 @@ public class OrderDetailActivity extends BaseActivity {
             finish();
             return;
         }
-
 
         initView();
 
@@ -77,10 +74,6 @@ public class OrderDetailActivity extends BaseActivity {
                     .append("\n");
         }
         mTvDesc.setText(sb.toString());
-
-
-
-
     }
 
     private void initView() {
@@ -89,6 +82,5 @@ public class OrderDetailActivity extends BaseActivity {
         mTvDesc = (TextView)findViewById(R.id.id_tv_desc);
         mTvPrice = (TextView)findViewById(R.id.id_tv_price);
     }
-
 
 }
