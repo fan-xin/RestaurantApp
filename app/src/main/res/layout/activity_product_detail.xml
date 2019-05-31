@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.ProductDetailActivity">
+
+    <include layout="@layout/common_toolbar">
+
+    </include>
+
+    <ImageView
+        android:id="@+id/id_iv_image"
+        android:src="@drawable/item_image"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/id_tv_title"
+        android:text="烤鸭"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/id_tv_desc"
+        android:text="烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭烤鸭"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/id_tv_price"
+        android:text="188元/份"
+        android:textSize="28sp"
+        android:textColor="#000000"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

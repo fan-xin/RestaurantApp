@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.fanxin.android.restaurantapplication.R;
 import com.fanxin.android.restaurantapplication.bean.Product;
 import com.fanxin.android.restaurantapplication.config.Config;
+import com.fanxin.android.restaurantapplication.ui.activity.ProductDetailActivity;
 import com.fanxin.android.restaurantapplication.utils.T;
 import com.fanxin.android.restaurantapplication.vo.ProductItem;
 import com.squareup.picasso.Picasso;
@@ -105,6 +106,9 @@ public class ProductListAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //启动商品详情页
+                    ProductDetailActivity.launch(mContext,
+                            mProductItems.get(getLayoutPosition()));
 
                 }
             });
