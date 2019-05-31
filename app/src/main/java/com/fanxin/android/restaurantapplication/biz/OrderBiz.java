@@ -37,9 +37,6 @@ public class OrderBiz {
 
         sb = sb.deleteCharAt(sb.length() -1);
 
-
-
-
         OkHttpUtils.post()
                 .url(Config.baseUrl+"order_add")
                 .addParams("res_id",order.getRestaurant().getId()+"")

@@ -1,10 +1,13 @@
 package com.fanxin.android.restaurantapplication.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -77,14 +80,26 @@ public class OrderActivity extends BaseActivity {
             }
         });
 
+        //点餐按钮
         mBtnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(OrderActivity.this, ProductListActivity.class);
+                startActivityForResult(intent,1001);
+
 
             }
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && requestCode == RESULT_OK){
+            loadDatas();
+        }
     }
 
     //向上拉，获取更多
@@ -96,6 +111,7 @@ public class OrderActivity extends BaseActivity {
                 stopLoadingProgress();
                 T.showToast(e.getMessage());
                 mCurrentPage--;
+                mSwipeRefreshLayout.setPullUpRefreshing(false);
 
             }
 
@@ -127,6 +143,7 @@ public class OrderActivity extends BaseActivity {
             public void onError(Exception e) {
                 stopLoadingProgress();
                 T.showToast(e.getMessage());
+                mSwipeRefreshLayout.setRefreshing(false);
 
             }
 
@@ -187,5 +204,31 @@ public class OrderActivity extends BaseActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            try{
+                Intent home = new Intent(Intent.ACTION_MAIN);
+                home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                home.addCategory(Intent.CATEGORY_HOME);
+                startActivity(home);
+                return true;
+
+            }catch (Exception e){
+                //ignoe
+            }
+
+        }
+
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mOrderBiz.onDestory();
     }
 }
