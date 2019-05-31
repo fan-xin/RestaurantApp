@@ -1,6 +1,7 @@
 package com.fanxin.android.restaurantapplication.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,7 +46,6 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-
     protected void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
         setSupportActionBar(toolbar);
@@ -68,7 +68,11 @@ public class BaseActivity extends AppCompatActivity {
 
     //跳转到登录界面
     protected void toLoginActivity(){
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        //清空Activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
 }

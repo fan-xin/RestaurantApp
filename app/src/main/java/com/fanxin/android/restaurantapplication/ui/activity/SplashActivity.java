@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         //添加监听事件
         initEvent();
 
-        mHandler.postDelayed(mRunnableToLogin,8000);
+        mHandler.postDelayed(mRunnableToLogin,5000);
 
     }
 

@@ -87,10 +87,8 @@ public class OrderActivity extends BaseActivity {
                 Intent intent = new Intent(OrderActivity.this, ProductListActivity.class);
                 startActivityForResult(intent,1001);
 
-
             }
         });
-
 
     }
 
@@ -112,6 +110,10 @@ public class OrderActivity extends BaseActivity {
                 T.showToast(e.getMessage());
                 mCurrentPage--;
                 mSwipeRefreshLayout.setPullUpRefreshing(false);
+
+                if ("用户未登录".equals(e.getMessage())){
+                    toLoginActivity();
+                }
 
             }
 
@@ -144,6 +146,12 @@ public class OrderActivity extends BaseActivity {
                 stopLoadingProgress();
                 T.showToast(e.getMessage());
                 mSwipeRefreshLayout.setRefreshing(false);
+
+                if ("用户未登录".equals(e.getMessage())){
+                    toLoginActivity();
+                }
+
+
 
             }
 
