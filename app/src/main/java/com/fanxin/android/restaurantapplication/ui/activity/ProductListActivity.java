@@ -30,23 +30,14 @@ public class ProductListActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private TextView mTvCount;
     private Button mBtnPay;
-
     private ProductListAdapter mAdapter;
     private List<ProductItem> mDatas = new ArrayList<>();
-
     private int mCurrentPage;
-
     private float mTotalPrice;
     private int mTotalCount;
-
-
     private ProductBiz mProductBiz = new ProductBiz();
-
     private OrderBiz mOrderBiz = new OrderBiz();
-
     private Order mOrder = new Order();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +45,11 @@ public class ProductListActivity extends BaseActivity {
         setContentView(R.layout.activity_product_list);
 
         setupToolbar();
-        setTitle("订餐");
+        setTitle("订餐列表");
 
         initView();
 
         initEvent();
-
         //加载数据
         loadDatas();
 
@@ -104,8 +94,6 @@ public class ProductListActivity extends BaseActivity {
 
                 startLoadingProgress();
 
-
-
                 mOrderBiz.add(mOrder, new CommonCallback<String>() {
                     @Override
                     public void onError(Exception e) {
@@ -139,8 +127,6 @@ public class ProductListActivity extends BaseActivity {
                 mBtnPay.setText(String.format("%5.2f",mTotalPrice)+"元　立即支付");
 
                 mOrder.addProduct(productItem);
-
-
 
             }
 
